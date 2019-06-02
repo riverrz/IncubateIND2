@@ -195,29 +195,11 @@ function drawGraph(source) {
       warehouse.classList = "truck";
       warehouseLocation = map.unproject(e.point);
       new mapboxgl.Marker(warehouse).setLngLat(warehouseLocation).addTo(map);
-      fetch("http://localhost:8000/cors", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          src: [truckLocation[0], truckLocation[1]],
-          dest: [warehouseLocation.lng, warehouseLocation.lat]
-        })
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.length === 0) {
-            throw new Error("Destination could not be reached");
-          }
-          // setnumpoint([
-          //   [truckLocation[0] + 0.005, truckLocation[1] + 0.006],
-          //   [truckLocation[0] + 0.004, truckLocation[1] + 0.003],
-          //   [warehouseLocation.lng, warehouseLocation.lat]
-          // ]);
-          setnumpoint(data);
-        })
-        .catch(console.log);
+      setnumpoint([
+        [truckLocation[0] + 0.005, truckLocation[1] + 0.006],
+        [truckLocation[0] + 0.004, truckLocation[1] + 0.003],
+        [warehouseLocation.lng, warehouseLocation.lat]
+      ]);
     });
 
     map.addSource("route", {
